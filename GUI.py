@@ -20,6 +20,7 @@ initial = [[sg.T('Welcome to the FileSystem Editor.\n'
 
 window = sg.Window('Welcome Page', initial).Finalize()
 win2_active = False
+new_active = False
 cursor = 0 #cursor is redefined as a different target/path based on what was last clicked on
 
 while True:
@@ -49,7 +50,6 @@ while True:
             sys.exit(0)
 
         elif event2[4:] in listdir:   ##event2[4:] because four newlines at beginning of event2 name (goes to open new window loop)
-            prevdir = init_dir         ##Set initial previous directory if we choose to go back immediately
             newdir = os.path.join(init_dir, event2[4:])
             listdir = os.listdir(newdir)    ##Update directory list for current directory
             window.close()
@@ -63,15 +63,15 @@ while True:
                 new_event, new_value = new_window.read()
 
                 if new_event == 'Back':
-                    newdir = prevdir                        ##Reset new directory to previous state
+                    newdir = os.path.dirname(newdir)      ##Reset directory to previous path
+                    prevdir = newdir
                     listdir = os.listdir(prevdir)           ##update listdir to previous directory
-                    new_window.close()                     
+                    new_window.close()
                     new_window = sg.Window(prevdir, gen_layout(prevdir)).Finalize()
                     new_window.Maximize()
 
                 elif new_event[4:] in listdir:
-                    prevdir = newdir
-                    newdir = os.path.join(prevdir, new_event[4:])
+                    newdir = os.path.join(newdir, new_event[4:])
                     listdir = os.listdir(newdir)            ##update listdir to new relevant directory
                     new_window.close()
                     new_window = sg.Window(newdir, gen_layout(newdir)).Finalize()

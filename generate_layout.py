@@ -10,7 +10,7 @@ file_icon = os.path.join(r'C:\Users\dopal\Desktop\Python\File_GUI\graphics', 'fi
 def gen_layout(dir):
     listdir = os.listdir(dir)       ##Generate list of filenames/dirs for current directory
     if len(listdir) > 40:
-        print('Error!!!!Too big!')
+        print('Error! Too many files/directories to display at this time!')
         sys.exit(0)
     dir_layout = []    ##empty output layout
     icon_count = 0     ##int to count number of icons printed
