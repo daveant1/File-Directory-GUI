@@ -3,8 +3,8 @@ import os as os
 import shutil as sh
 import re as re
 import PySimpleGUI as sg
-folder_icon = os.path.join(r'C:\Desktop\Python\File_GUI\graphics', 'folder_icon.png')
-file_icon = os.path.join(r'C:\Desktop\Python\File_GUI\graphics', 'file_icon.png')
+folder_icon = os.path.join(r'C:\Users\dopal\Desktop\Python\File_GUI\graphics', 'folder_icon.png')
+file_icon = os.path.join(r'C:\Users\dopal\Desktop\Python\File_GUI\graphics', 'file_icon.png')
 
 ##Screen size is 5x8 icons
 def gen_layout(dir):
@@ -21,7 +21,7 @@ def gen_layout(dir):
                 element.append(sg.Button('\n\n\n\n'+ name, image_filename = folder_icon, image_size = (160,160)))   ##append another button to the element (row)
                 icon_count = icon_count + 1
             elif os.path.isfile(path) and icon_count < 8:
-                element.append(sg.Button('\n\n\n\n' + name, image_filename = file_icon, image_size = (160,160)))     ##append another button to the element (row)
+                element.append(sg.Button('\n\n\n\n' + name, button_color = ('black', 'white'), image_filename = file_icon, image_size = (160,160)))     ##append another button to the element (row)
                 icon_count = icon_count + 1
             else:
                 dir_layout.append(element)      ##complete element added to directory layout
