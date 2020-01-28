@@ -37,6 +37,7 @@ while True:
         window2 = sg.Window(init_dir, gen_layout(init_dir)).Finalize()
         window2.Maximize() #(maximizes window, require .finalize() on windows)
 
+     ##window2 is our initial file directory interface, which goes to new_active loop to generate new windows
     while win2_active:
         event2, value2 = window2.read()
 
@@ -51,13 +52,17 @@ while True:
 
         elif event2[4:] in listdir:   ##event2[4:] because four newlines at beginning of event2 name (goes to open new window loop)
             newdir = os.path.join(init_dir, event2[4:])
-            listdir = os.listdir(newdir)    ##Update directory list for current directory
-            window.close()
-            window2.close()                 ##Close window2 and set flag false
-            win2_active = False
-            new_window = sg.Window(newdir, gen_layout(newdir)).Finalize()   ##Open new window and set new flag true
-            new_window.Maximize()
-            new_active = True
+            if os.path.isdir(newdir):
+                listdir = os.listdir(newdir)    ##Update directory list for current directory
+                window.close()
+                window2.close()                 ##Close window2 and set flag false
+                win2_active = False
+                new_window = sg.Window(newdir, gen_layout(newdir)).Finalize()   ##Open new window and set new flag true
+                new_window.Maximize()
+                new_active = True
+            else:
+                os.system("start " + newdir)          ##Start the file
+                newdir = os.path.dirname(newdir)      ##Reset path to directory minus the filename
 
     while new_active:
                 new_event, new_value = new_window.read()
@@ -72,10 +77,14 @@ while True:
 
                 elif new_event[4:] in listdir:
                     newdir = os.path.join(newdir, new_event[4:])
-                    listdir = os.listdir(newdir)            ##update listdir to new relevant directory
-                    new_window.close()
-                    new_window = sg.Window(newdir, gen_layout(newdir)).Finalize()
-                    new_window.Maximize()
+                    if os.path.isdir(newdir):
+                        listdir = os.listdir(newdir)            ##update listdir to new relevant directory
+                        new_window.close()
+                        new_window = sg.Window(newdir, gen_layout(newdir)).Finalize()
+                        new_window.Maximize()
+                    else:
+                        os.system("start " + newdir)          ##Start the file
+                        newdir = os.path.dirname(newdir)      ##Reset path to directory minus the filename
 
                 elif new_event in (None, 'Exit'):
                     new_window.close()
