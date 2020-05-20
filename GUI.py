@@ -3,13 +3,13 @@ import os as os
 import shutil as sh
 import re as re
 import PySimpleGUI as sg
-from generate_layout import gen_layout
+from generate_layout import main_page
 sys.path.insert(1, r'C:/')
 
 #######Section with sprites and file setup
 sg.theme('GreenMono')
-folder_icon = os.path.join(r'C:\Users\dopal\Desktop\Python\File_GUI\graphics', 'folder_icon.png')
-file_icon = os.path.join(r'C:\Users\dopal\Desktop\Python\File_GUI\graphics', 'file_icon.png')
+folder_icon = os.path.join(r'C:\Users\dopal\Desktop\Projects\File-Directory-GUI\graphics', 'folder_icon.png')
+file_icon = os.path.join(r'C:\Users\dopal\Desktop\Projects\File-Directory-GUI\graphics', 'file_icon.png')
 init_dir = r'C:/'                  #Set inital directory name for testing
 listdir = os.listdir(init_dir)      #List of files/directories within current directory
 
@@ -34,7 +34,7 @@ while True:
 
     if not win2_active and event1 == 'OK':
         win2_active = True
-        window2 = sg.Window(init_dir, gen_layout(init_dir)).Finalize()
+        window2 = sg.Window(init_dir, main_page(init_dir).page).Finalize()
         window2.Maximize() #(maximizes window, require .finalize() on windows)
 
      ##window2 is our initial file directory interface, which goes to new_active loop to generate new windows
@@ -57,7 +57,8 @@ while True:
                 window.close()
                 window2.close()                 ##Close window2 and set flag false
                 win2_active = False
-                new_window = sg.Window(newdir, gen_layout(newdir)).Finalize()   ##Open new window and set new flag true
+                newpage = main_page(newdir)
+                new_window = sg.Window(newdir, newpage.page).Finalize()   ##Open new window and set new flag true
                 new_window.Maximize()
                 new_active = True
             else:
@@ -72,7 +73,8 @@ while True:
                     prevdir = newdir
                     listdir = os.listdir(prevdir)           ##update listdir to previous directory
                     new_window.close()
-                    new_window = sg.Window(prevdir, gen_layout(prevdir)).Finalize()
+                    newpage = main_page(prevdir)
+                    new_window = sg.Window(prevdir, newpage.page).Finalize()
                     new_window.Maximize()
 
                 elif new_event[4:] in listdir:
@@ -80,7 +82,7 @@ while True:
                     if os.path.isdir(newdir):
                         listdir = os.listdir(newdir)            ##update listdir to new relevant directory
                         new_window.close()
-                        new_window = sg.Window(newdir, gen_layout(newdir)).Finalize()
+                        new_window = sg.Window(newdir, main_page(newdir).page).Finalize()
                         new_window.Maximize()
                     else:
                         os.system("start " + newdir)          ##Start the file
