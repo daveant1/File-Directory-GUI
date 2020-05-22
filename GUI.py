@@ -10,8 +10,6 @@ prog_dir = os.getcwd() #program directory (location of GUI.py and other main fil
 
 #######Section with sprites and file setup
 sg.theme('GreenMono')
-#folder_icon = os.path.join(prog_dir,r'graphics', 'folder_icon.png')
-#file_icon = os.path.join(prog_dir,r'graphics', 'file_icon.png')
 init_dir = r'C:/'                  #Set inital directory name for testing
 
 initial = [[sg.T('Welcome to the FileSystem Editor.\n'
@@ -24,7 +22,6 @@ start = sg.Window('Welcome Page', initial).Finalize()
 #Starting Screen (input name)
 while True:
     event1, value1 = start.read()
-
     if event1 in (None, 'Exit'):
         start.close()
         sys.exit(0)
