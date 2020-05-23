@@ -8,7 +8,7 @@ from file_functions import *
 
 prog_dir = os.getcwd() #program directory (location of GUI.py and other main files)
 
-#######Section with sprites and file setup
+#######Section with sprites and file setup##########
 sg.theme('GreenMono')
 init_dir = r'C:/'                  #Set inital directory name for testing
 
@@ -19,9 +19,10 @@ initial = [[sg.T('Welcome to the FileSystem Editor.\n'
 
 start = sg.Window('Welcome Page', initial).Finalize()
 
-#Starting Screen (input name)
+########Starting Screen (input name)#########
 while True:
     event1, value1 = start.read()
+
     if event1 in (None, 'Exit'):
         start.close()
         sys.exit(0)
@@ -39,7 +40,7 @@ while True:
         new_window.Maximize()               #maximizes window, requires .Finalize() on window
         break
 
-#The phase that the program spends majority of time in (default new window view)
+###Phase that the program spends majority of time in (default new window view)###
 while True:
         new_event, new_value = new_window.read()
         if new_event in (None, 'Exit'):

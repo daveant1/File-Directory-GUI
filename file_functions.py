@@ -5,7 +5,7 @@ import re as re
 import PySimpleGUI as sg
 from gen_layout import mainpage
 
-#Generates Error Window layout opens window (int Type specifies type of error)
+#Generates Error Window (int Type specifies type of error)
 def gen_error(type):
     if type == 0:
         error = [[sg.T('Warning: Cannot travel up a directory. Limit reached.')], [sg.Button('Close')]]  #Error window layout
@@ -58,8 +58,7 @@ def gen_new(curr_dir, type):
                     os.mkdir(new_path)
                 else:
                     f = open(new_path, "w")
-                listdir = os.listdir(curr_dir)     #Refresh curr_dir after adding file/folder
-                return listdir
+                return (os.listdir(curr_dir))     #Refresh curr_dir after adding file/folder
             else:
                 gen_error(1)
                 continue
